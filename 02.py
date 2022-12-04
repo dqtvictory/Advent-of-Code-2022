@@ -27,7 +27,7 @@ def outcome(op: str, me: str):
 		return 6 * (op < me)
 	return 6 * (op > me)
 
-def part1(lines: list[str]):
+def part1(lines: List[str]):
 	score = 0
 	for line in lines:
 		play = line.split()
@@ -47,7 +47,7 @@ out_dic = dict(
 	Z = 6,
 )
 
-def part2(lines: list[str]):
+def part2(lines: List[str]):
 	score = 0
 	for line in lines:
 		play = line.split()

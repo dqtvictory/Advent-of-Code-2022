@@ -1,7 +1,7 @@
 from common import *
 
 
-def part1(lines: list[str]):
+def part1(lines: List[str]):
 	total = 0
 	for line in lines:
 		length = len(line)
@@ -14,7 +14,7 @@ def part1(lines: list[str]):
 			total += ord(c) - ord('A') + 27
 	return total
 
-def part2(lines: list[str]):
+def part2(lines: List[str]):
 	total = 0
 	for i, line in enumerate(lines):
 		if i % 3 == 0:
