@@ -1,33 +1,42 @@
 from common import *
 
 
+alpha = "qwertyuiopasdfghjklzxcvbnm"
+alpha = set(alpha + str.upper(alpha))
+
+a, A = ord('a'), ord('A')
+
 def part1(lines: List[str]):
-	total = 0
-	for line in lines:
-		length = len(line)
-		s1 = set(line[: length//2])	# first half
-		s2 = set(line[length//2 :])	# second half
-		c = s1.intersection(s2).pop()	# common letter
-		if c.islower():
-			total += ord(c) - ord('a') + 1
-		else:
-			total += ord(c) - ord('A') + 27
-	return total
+	return sum(
+		map(
+			lambda c: ord(c) - a + 1 if c.islower() else ord(c) - A + 27,
+			map(
+				lambda sets: sets[0].intersection(sets[1]).pop(),
+				map(
+					lambda l: (set(l[: len(l)//2]), set(l[len(l)//2 :])),
+					lines
+				)
+			)
+		)
+	)
 
 def part2(lines: List[str]):
-	total = 0
-	for i, line in enumerate(lines):
-		if i % 3 == 0:
-			s = set(line)
-			continue
-		s = s.intersection(set(line))
+	def line_reducer(prev: Tuple[int, Set[str]], cur: Tuple[int, Set[str]]):
+		i, s = cur
+		s = s.intersection(prev[1])
 		if i % 3 == 2:
-			c = s.pop()	# common letter in 3 consecutive lines
-			if c.islower():
-				total += ord(c) - ord('a') + 1
-			else:
-				total += ord(c) - ord('A') + 27
-	return total
+			c = s.pop()
+			val = ord(c) - a + 1 if c.islower() else ord(c) - A + 27
+			return val + prev[0], alpha
+		return prev[0], s
+	
+	return reduce(
+		line_reducer,
+		map(
+			lambda pair: (pair[0], set(pair[1])),
+			enumerate(lines)
+		)
+	)[0]
 	
 
 if __name__ == '__main__':

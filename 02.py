@@ -17,44 +17,56 @@ me_dic = dict(
 	Z = 's',
 )
 
-def outcome(op: str, me: str):
-	if op == me:
-		return 3
-	order = "rps"
-	op = order.index(op)
-	me = order.index(me)
-	if abs(op - me) == 1:
-		return 6 * (op < me)
-	return 6 * (op > me)
-
-def part1(lines: List[str]):
-	score = 0
-	for line in lines:
-		play = line.split()
-		opponent, me = opponent_dic[play[0]], me_dic[play[1]]
-		score += score_dic[me] + outcome(opponent, me)
-	return score
-
-def get_me(op: str, out_score: int):
-	if out_score == 3:
-		return op
-	order = "rpsr" if out_score == 6 else "rspr"
-	return order[order.index(op) + 1]
-
-out_dic = dict(
+me_out_dic = dict(
 	X = 0,
 	Y = 3,
 	Z = 6,
 )
 
+order_dic = {
+	0: "rspr",
+	6: "rpsr",
+}
+
+def part1(lines: List[str]):
+	def score(pair: Tuple[int, int]):
+		op, me = pair
+		if op == me:
+			return 3
+		if abs(op - me) == 1:
+			return 6 * (op < me)
+		return 6 * (op > me)
+	
+	return sum(
+		map(
+			lambda pair: pair[1] + score(pair),
+			map(
+				lambda pair: (score_dic[pair[0]], score_dic[pair[1]]),
+				map(
+					lambda pair: (opponent_dic[pair[0]], me_dic[pair[1]]),
+					map(str.split, lines)
+				)
+			)
+		)
+	)
+
 def part2(lines: List[str]):
-	score = 0
-	for line in lines:
-		play = line.split()
-		opponent, out_score = opponent_dic[play[0]], out_dic[play[1]]
-		me = get_me(opponent, out_score)
-		score += out_score + score_dic[me]
-	return score
+	def me_score(pair: Tuple[str, int]):
+		op, score = pair
+		if score == 3:
+			return score_dic[op]
+		order = order_dic[score]
+		return score_dic[order[order.index(op) + 1]]
+	
+	return sum(
+		map(
+			lambda pair: pair[1] + me_score(pair),
+			map(
+				lambda pair: (opponent_dic[pair[0]], me_out_dic[pair[1]]),
+				map(str.split, lines)
+			)
+		)
+	)
 	
 
 if __name__ == '__main__':

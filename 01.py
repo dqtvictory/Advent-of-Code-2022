@@ -2,28 +2,21 @@ from common import *
 
 
 def part1(lines: List[str]):
-	maxi = -1
-	current = 0
-	for line in lines:
-		if line:
-			current += int(line)
-		else:
-			maxi = max(maxi, current)
-			current = 0
-	return maxi
+	return reduce(
+		lambda prev, cur: (prev[0], prev[1] + cur) if cur is not None else (max(prev), 0),
+		map(lambda l: int(l) if l else None, lines),
+		(-1, 0)
+	)[0]
 
 def part2(lines: List[str]):
-	current = 0
-	res = []
-	for line in lines:
-		if line:
-			current += int(line)
-		else:
-			res.append(current)
-			current = 0
-	res = sorted(res, reverse=True)[:3]
-	return sum(res)
-	
+	return sum(sorted(
+		reduce(
+			lambda prev, cur: (prev[0], prev[1] + cur) if cur is not None else (prev[0] + [prev[1]], 0),
+			map(lambda l: int(l) if l else None, lines),
+			([], 0)
+		)[0], reverse = True
+	)[:3])
+
 
 if __name__ == '__main__':
 	fname = "input" if len(argv) == 1 else argv[1]
