@@ -40,7 +40,7 @@ def part2(lines: List[str]):
 	
 
 if __name__ == '__main__':
-	fname = "input" if len(argv) == 1 else argv[1]
+	fname = "input.txt" if len(argv) == 1 else argv[1]
 	lines = get_lines(fname)
 
 	print("Part 1:", part1(lines))

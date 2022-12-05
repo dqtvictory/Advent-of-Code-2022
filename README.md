@@ -4,6 +4,10 @@
 
 My own solutions to the challenges of AoC this year in Python.
 
+<b>Major update to my functional programming journey:</b> In order to "force" the proper FP style to my Python code, I have spent half a day to create an utility class `Chainable` that wraps around any Python iterable (including map/filter objects, etc...) enabling function chaining. Of course one can do the same in Python using Pandas or PySpark but these are heavy libraries with great capability which would be an overkill. Starting from Day 5, this will be my coding style until the end.
+
+_Update after Day 5: The input file on this day was quite annoying to parse into data, so from now on I will spend some minutes of doing text formatting before actually coding to save time. My FP solution works with original input given by the author of AoC._
+
 _Update after Day 4: I decided that programming procedurally is way too cliché, so I switched to functional programming style, still in Python. Since this is not the best language to do FP using built-in functions, the indentation and bracketing is kinda eyesoring, so I'm trying my best to make the code readable._
 
 Executing `python XX.py fname` will display the answers to all the parts of day XX's challenge whose input is read from the file named `fname`
