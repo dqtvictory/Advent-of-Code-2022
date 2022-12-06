@@ -16,7 +16,7 @@ def part2(lines: List[str]):
 
 if __name__ == '__main__':
 	fname = "input.txt" if len(argv) == 1 else argv[1]
-	lines = get_lines(fname)
+	lines = get_lines(fname, rstrip=True)
 
 	print("Part 1:", part1(lines))
 	print("Part 2:", part2(lines))
