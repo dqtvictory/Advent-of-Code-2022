@@ -14,6 +14,9 @@ class Chainable:
 
 	def __iter__(self):
 		return self.__iterable
+
+	def __len__(self):
+		return len(self.collect())
 	
 	def collect(self, container_t=list):
 		""" Return a shallow copy of the inner iterable. If `container_t` is specified
@@ -59,4 +62,9 @@ class Chainable:
 	def enumerate(self, start=0):
 		return Chainable(
 			enumerate(self.__iterable, start)
+		)
+
+	def reverse(self):
+		return Chainable(
+			reversed(self.collect())
 		)
