@@ -1,20 +1,24 @@
 from common import *
 
 
-def part1(lines: List[str]):
+def mat_indexer(i_row: Tuple[int, List[int]]):
+	i, row = i_row
+	return Chainable(row) \
+		.enumerate() \
+		.map(lambda jn: (i, jn[0], jn[1])) \
+		.collect()
+
+def make_matrix(lines: List[str]):
 	matrix = Chainable(lines) \
 		.map(lambda l: Chainable(l).map(int).collect()) \
 		.collect()
 	nbrow = len(matrix)
 	nbcol = len(matrix[0])
-	perim = 2 * (nbrow + nbcol - 2)
+	return matrix, nbrow, nbcol
 
-	def mat_indexer(i_row: Tuple[int, List[int]]):
-		i, row = i_row
-		return Chainable(row) \
-			.enumerate() \
-			.map(lambda jn: (i, jn[0], jn[1])) \
-			.collect()
+def part1(lines: List[str]):
+	matrix, nbrow, nbcol = make_matrix(lines)
+	perim = 2 * (nbrow + nbcol - 2)
 
 	def is_visible(tup: Tuple[int, int, int]):
 		i, j, n = tup
@@ -42,18 +46,7 @@ def part1(lines: List[str]):
 		.reduce(lambda a, b: a + b) + perim
 
 def part2(lines: List[str]):
-	matrix = Chainable(lines) \
-		.map(lambda l: Chainable(l).map(int).collect()) \
-		.collect()
-	nbrow = len(matrix)
-	nbcol = len(matrix[0])
-	
-	def mat_indexer(i_row: Tuple[int, List[int]]):
-		i, row = i_row
-		return Chainable(row) \
-			.enumerate() \
-			.map(lambda jn: (i, jn[0], jn[1])) \
-			.collect()
+	matrix, nbrow, nbcol = make_matrix(lines)
 
 	def get_visibility(tup: Tuple[int, int, int]):
 		i, j, n = tup
@@ -84,8 +77,7 @@ def part2(lines: List[str]):
 		.flat_map(mat_indexer) \
 		.filter(lambda ijn : (
 				(0 < ijn[0] < nbrow - 1) and \
-				(0 < ijn[1] < nbcol - 1)
-		)) \
+				(0 < ijn[1] < nbcol - 1) )) \
 		.map(get_visibility) \
 		.reduce(lambda a, b: max(a, b))
 
