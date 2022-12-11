@@ -1,5 +1,5 @@
 from sys import argv
-from typing import List, Set, Dict, Tuple
+from typing import List, Set, Dict, Tuple, Deque
 from functools import reduce
 from fp import Chainable
 
