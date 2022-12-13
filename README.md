@@ -6,6 +6,8 @@ My own solutions to the challenges of AoC this year in Python.
 
 <b>Major update to my functional programming journey:</b> In order to "force" the proper FP style to my Python code, I have spent half a day to create an utility class `Chainable` that wraps around any Python iterable (including map/filter objects, etc...) enabling function chaining. Of course one can do the same in Python using Pandas or PySpark but these are heavy libraries with great capability which would be an overkill. Starting from Day 5, this will be my coding style until the end.
 
+_Update Day 12: BFS algorithm -> not ideal to execute the algo using FP. I tried my best to use FP wherever I can_
+
 _Update Day 11: Interesting day. Results in part 2 wouldn't be possible without bounding the numbers to prevent numerical explosion. Once again, FP was little possible since state changes are significant and procedural_
 
 _Update Day 7: Haven't yet found a good way to generate a filesystem's tree from a list of instructions using FP, since the FS's state changes after each line and the correct tree can only be generate procedurally from top to bottom. The solution for this Day is unfortunately classical Python_
