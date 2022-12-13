@@ -1,4 +1,5 @@
 from common import *
+from functools import cmp_to_key
 
 def build_items(lines: List[str]) -> list:
 	def item_reducer(prev: List[Tuple[list, list]], cur: Tuple[int, list]):
@@ -43,13 +44,8 @@ def part2(items: List[Tuple[list, list]]):
 	packets = Chainable(items) \
 		.flat_map(list) \
 		.collect() + [p2, p6]
-	# in-place bubble sort, must be done procedurally
-	for i in range(1, len(packets)):
-		j = i
-		while j > 0 and cmp(packets[j-1], packets[j]) > 0:
-			packets[j-1], packets[j] = packets[j], packets[j-1]
-			j -= 1
 	return Chainable(packets) \
+		.sort(key=cmp_to_key(cmp)) \
 		.enumerate(1) \
 		.filter(lambda il: il[1] == p2 or il[1] == p6) \
 		.reduce(lambda p, il: p * il[0], True, 1) 
